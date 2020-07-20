@@ -8,6 +8,7 @@ import Search from './components/users/Search';
 import Alert from './components/layouts/Alert';
 import About from './components/pages/About';
 import User from './components/users/User';
+import GithubState from './context/Github/GithubState';
 
 const App = () => {
 
@@ -55,50 +56,53 @@ const App = () => {
   }
 
   return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <div className="container">
-          <Alert alert={alert} />
-          <Switch>
-            <Route
-              exact
-              path='/'
-              render={props => (
-                <Fragment>
-                  <Search
-                    searchUsers={searchUsersHandler}
-                    clearUsers={clearUsersHandler}
-                    showClear={users.length > 0 ? true : false}
-                    setAlert={showAlertHandler} />
-                  <Users loading={loading} users={users} />
-                </Fragment>
-              )}
-            />
-            <Route
-              exact
-              path='/about'
-              component={About}
-            />
-            <Route
-              exact
-              path='/user/:login'
-              render={props => (
-                <User
-                  {...props}
-                  getUser={getUserHandler}
-                  getUserRepos={getUserReposHandler}
-                  user={user}
-                  repos={repos}
-                  loading={loading} />
-              )}
-            />
-          </Switch>
+    <GithubState>
+      <Router>
+        <div className="App">
+          <Navbar />
+          <div className="container">
+            <Alert alert={alert} />
+            <Switch>
+              <Route
+                exact
+                path='/'
+                render={props => (
+                  <Fragment>
+                    <Search
+                      searchUsers={searchUsersHandler}
+                      clearUsers={clearUsersHandler}
+                      showClear={users.length > 0 ? true : false}
+                      setAlert={showAlertHandler} />
+                    <Users loading={loading} users={users} />
+                  </Fragment>
+                )}
+              />
+              <Route
+                exact
+                path='/about'
+                component={About}
+              />
+              <Route
+                exact
+                path='/user/:login'
+                render={props => (
+                  <User
+                    {...props}
+                    getUser={getUserHandler}
+                    getUserRepos={getUserReposHandler}
+                    user={user}
+                    repos={repos}
+                    loading={loading} />
+                )}
+              />
+            </Switch>
 
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
 
+
+    </GithubState>
   );
 }
 
