@@ -1,57 +1,52 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types';
 
-export class Search extends Component {
-    static propTypes = {
-        searchUsers: PropTypes.func.isRequired,
-        clearUsers: PropTypes.func.isRequired,
-        showClear: PropTypes.bool.isRequired,
-        setAlert: PropTypes.bool.isRequired,
+const Search = ({ searchUsers, showClear, clearUsers, setAlert }) => {
+
+    const [text, setText] = useState('');
+
+    const onChangeHandler = (event) => {
+        setText(event.target.value);
     }
 
-    state = {
-        text: ''
-    }
-
-    onChangeHandler = (event) => {
-        this.setState({ text: event.target.value });
-    }
-
-    onSubmitHandler = (event) => {
+    const onSubmitHandler = (event) => {
         event.preventDefault();
-        if (this.state.text === '') {
-            this.props.setAlert(' Please enter something to search!', 'light')
+        if (text === '') {
+            setAlert(' Please enter something to search!', 'light')
         }
         else {
-            this.props.searchUsers(this.state.text);
-            this.setState({ text: '' });
+            searchUsers(text);
+            setText('');
         }
     }
-
-    render() {
-
-        const { clearUsers, showClear } = this.props;
-        return (
-            <div>
-                <form className="form" onSubmit={this.onSubmitHandler}>
-                    <input type="text"
-                        name="text"
-                        value={this.state.text}
-                        placeholder="Search Users here"
-                        onChange={this.onChangeHandler} />
-                    <input
-                        type="submit"
-                        value="search"
-                        className="btn btn-dark btn-block"
-                    />
-                </form>
-                {showClear && <button
-                    className="btn btn-light btn-block"
-                    onClick={clearUsers}>Clear
+    return (
+        <div>
+            <form className="form" onSubmit={onSubmitHandler}>
+                <input type="text"
+                    name="text"
+                    value={text}
+                    placeholder="Search Users here"
+                    onChange={onChangeHandler} />
+                <input
+                    type="submit"
+                    value="search"
+                    className="btn btn-dark btn-block"
+                />
+            </form>
+            {showClear && <button
+                className="btn btn-light btn-block"
+                onClick={clearUsers}>Clear
                 </button>}
-            </div>
-        )
-    }
+        </div>
+    );
+
+}
+
+Search.propTypes = {
+    searchUsers: PropTypes.func.isRequired,
+    clearUsers: PropTypes.func.isRequired,
+    showClear: PropTypes.bool.isRequired,
+    setAlert: PropTypes.bool.isRequired,
 }
 
 export default Search
