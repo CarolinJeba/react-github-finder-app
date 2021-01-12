@@ -1,2 +1,2 @@
 # react-learning
-My React Learning Projects
+My React Learning Project : github-finder-app
