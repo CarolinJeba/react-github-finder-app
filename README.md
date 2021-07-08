@@ -1,5 +1,5 @@
 # react-learning
-My React Learning Project- github-finder-app
+My React Learning Project: github-finder-app
 
 This app is part of the "Modern React Front To Back" Udemy course by Brad Traversy
 
